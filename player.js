@@ -5,25 +5,25 @@ class Player {
         this.gameWidth = gameW;
         this.gameHeight = gameH;
 
-        this.width = 90;
+        this.width = 100;
         this.height = 120;
 
         this.posX = 20;
-        this.posY = this.gameHeight / 2;
-        this.posY0 = this.posY
+        this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
+        // this.posY0 = this.posY // maybe for the moving player!!
 
-        this.mouseX = undefined;
-        this.mouseY = undefined;
+        // this.mouseX = undefined; //define the mouse position for the pointer???
+        // this.mouseY = undefined;
 
-        this.targetX = undefined;
+        this.targetX = undefined; //define the target, so we can take the distance position
         this.targetY = undefined;
 
-        this.bulletX = undefined;
+        this.bulletX = undefined; // the postion of the bullet
         this.bulletY = undefined;
 
         this.image = new Image();
         this.image.src = imgSource;
-        this.image.frames = 11;
+        this.image.frames = 11; // the number of img of the sprite
         this.image.framesIndex = 0;
 
         this.keys = keys;
@@ -36,10 +36,10 @@ class Player {
         this.setListeners()
 
     }
-    draw(framesCounter) {
-        this.ctx.drawImage(
+    draw(framesCounter) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
+        this.ctx.drawImage( // this draw the player
             this.image,
-            this.image.framesIndex * Math.floor(this.image.width / this.image.frames),
+            this.image.framesIndex * Math.round(this.image.width / this.image.frames), // divide the width of the sprite
             0,
             Math.floor(this.image.width / this.image.frames),
             this.image.height,
@@ -56,7 +56,7 @@ class Player {
     move() {
         this.bullets.forEach(bullet => bullet.move());
     }
-    animate(framesCounter) {
+    animate(framesCounter) { // this animates the player
         if (framesCounter % 5 == 0) {
             this.image.framesIndex++;
         }
@@ -66,36 +66,21 @@ class Player {
     }
     setListeners() {
         document.addEventListener("click", e => {
-            document.onmousemove = event => {
-                this.mouseX = event.pageX
-                this.mouseY = event.pageY
-                this.targetX = this.mouseX// - this.posX;
-                this.targetY = this.mouseY //- this.posY;
-            }
-            document.onclick = event => {
-                this.shootX = event.pageX
-                this.shootY = event.pageY
-                this.shoot(event.pageX, event.pageY)
+            document.onmousemove = e => { // this sets the event of the mouse pointer
+                // this.mouseX = event.pageX // have the set por the pointer
+                // this.mouseY = event.pageY
+                this.targetX = e.pageX
+                this.targetY = e.pageY
             }
             if (e.initMouseEvent) this.shoot();
 
         });
     }
-    shoot() {
+    shoot() { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
         
-// new Bullet(this.pos.x, this.pos.y, tx, ty, this.ctx, this.bullets
-        this.bullets.push(new Bullets(this.ctx, this.posX, this.posY, this.targetX, this.targetY, this.width,this.height));
+        this.bullets.push(new Bullets(this.ctx, this.posX-50, this.posY-50, this.targetX, this.targetY, this.width,this.height));
     }
-    clearBullets() {
-
+    clearBullets() { // this set if the posX < of the target then crear out, always si a little more
         this.bullets = this.bullets.filter(bull => bull.posX <= bull.targetX);
-        
-       
     }
 }
-
-
-//        this.bullets = this.bullets.filter(bull => bull.posX <= bull.targetX);
-// this.bullets = this.bullets.forEach(bulleet => {
-// if (Math.round(bullet.prevVelX) !== -Math.round(bullet.velX) && Math.round(bullet.prevVelY) !== -Math.round(bullet.velY)) bulleet.img.src = ('./img/Rambo.png')
-// });
