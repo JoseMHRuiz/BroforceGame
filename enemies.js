@@ -64,18 +64,14 @@ class Enemy {
         // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
     }
 
-    drawDead(enemy,framesCounter) {
+    drawDead(enemy, framesCounter) { //This draw the deadAnimation passing the parametres!!
         enemy.draw(framesCounter)
-           enemy.image.frames = 6
-           enemy.image.src = './img/Zombie2Deifinitive.png'
-           enemy.speed = 0
-           enemy.width = 110
-           enemy.height = 130
-           if (this.framesCounter % 70 === 0) this.framesCounter = 0
-        //    setTimeout(() => {
-        //        this.enemyDeadArr.splice(this.enemyDeadArr.indexOf(enemy), 1)
-        //    }, 2500)
-           // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
+        enemy.image.frames = 6
+        enemy.image.src = './img/Zombie2Deifinitive.png'
+        enemy.speed = 0
+        enemy.width = 110
+        enemy.height = 130
+        if (this.framesCounter % 70 === 0) this.framesCounter = 0
     }
 
     die() {

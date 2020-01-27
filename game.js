@@ -66,14 +66,12 @@ const game = {
                     this.collision(enemy, bullet)
                 )
             ) {
-                // enemy.setDie(enemy)
-                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1)
-                this.deadEnemiesArr.push(enemy)
+                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1) //splice the enemy with a setTimeout
+                this.deadEnemiesArr.push(enemy) // push enemy in a deadEnemy
                 console.log(this.deadEnemiesArr)
-                setTimeout(() => {
+                setTimeout(() => { // set time out for the animation zombie
                     this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
                 }, 1800)
-                //set the enemy a new animation 
             }
         })
         this.player.bullets.forEach(bullet => { // This eliminate the bullet pro the array when the bulle touch the zombie
@@ -86,11 +84,6 @@ const game = {
             }
         })
     },
-    setDiedZombies() {
-
-    },
-
-
     setDimensions() {
         this.canvas.width = this.width
         this.canvas.height = this.height
@@ -102,6 +95,7 @@ const game = {
             // this.enemy.posX--
             enemy.draw(this.framesCounter)
         })
+        // This call the function of the Enemy array and set the new animation!!! NO SE TE OLVIDE ESTO!!!!
         this.deadEnemiesArr.forEach((enemy) => enemy.drawDead(enemy, this.framesCounter))
 
 
