@@ -77,7 +77,7 @@ class Player {
         });
     }
     shoot() { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
-        
+
         this.bullets.push(new Bullets(this.ctx, this.posX-50, this.posY-50, this.targetX, this.targetY, this.width,this.height));
     }
     clearBullets() { // this set if the posX < of the target then crear out, always si a little more

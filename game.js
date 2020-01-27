@@ -17,8 +17,12 @@ const game = {
     mousePos: undefined,
     message: undefined,
     score: 0,
-    zombies: 0,
+    enemysArr: [],
     rect: undefined,
+
+    counterEnemies: 0,
+
+
     keys: {
         TOP: 38,
         SPACE: 32
@@ -32,43 +36,75 @@ const game = {
     start() {
         this.reSet() //Set the images of the bg and the player
         this.interval = setInterval(() => { // this is the interval, all the moving parts inside
-            if (this.framesCounter > 5000) { 
+            if (this.framesCounter > 5000) {
                 this.framesCounter = 0;
             }
+            this.counterEnemies++
             this.framesCounter++; // this is the important part for the velocity of the things!!!
+
             this.clear(); // clear the canvas every time
             this.drawAll();
+            this.generateEnemies();
             this.moveAll();
-            this.generateZombies();
+            this.bulletsVsZombies();
+
+
         }, 1000 / this.FPS);
     },
+    collision(enemy, bullet) {
+        return enemy.posX < bullet.posX + bullet.width &&
+            enemy.posX + enemy.width > bullet.posX &&
+            enemy.posY < bullet.posY + bullet.height &&
+            enemy.posY + enemy.height > bullet.posY;
+    },
+    bulletsVsZombies() {
+        this.enemysArr.forEach(enemy => {
+            if (
+                this.player.bullets.some(bullet => {
+                    return this.collision(enemy, bullet)
+                })
+            ) {
+                enemy.posX
+                enemy.setDie(enemy)
+                console.log(enemy)
+                // this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1)
+                //  this.kills++ kills counter
+            }
+        })
+    },
+
+    
+
     setDimensions() {
         this.canvas.width = this.width
         this.canvas.height = this.height
     },
     drawAll() {
         this.backgroud.draw()
-        this.player.draw(this.framesCounter);//IMPORTANT!! set the timming of the sprite player!!!
+        this.player.draw(this.framesCounter); //IMPORTANT!! set the timming of the sprite player!!!
+        this.enemysArr.forEach((enemy) => {
+            // this.enemy.posX--
+            enemy.draw(this.framesCounter)
+        })
+
 
     },
     moveAll() {
         this.player.move()
 
     },
-    reSet() { 
+    reSet() {
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
         this.player = new Player(this.ctx, this.width, this.height, this.keys, './img/RamboHQ.png');
-
     },
     clear() {
 
     },
-    generateZombies() {
-
+    generateEnemies() {
+        if (this.counterEnemies % 100 === 0)
+            
+            this.enemysArr.push(new Enemy(this.ctx, this.width, this.height, './img/ZombieMoving.png'))
     },
-    setLiseners(canvas,) {
-        
-    }
 
 
 
