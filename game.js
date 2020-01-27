@@ -19,7 +19,7 @@ const game = {
     score: 0,
     enemysArr: [],
     rect: undefined,
-
+    deadEnemiesArr : [],
     counterEnemies: 0,
 
 
@@ -47,6 +47,7 @@ const game = {
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
+            
 
 
         }, 1000 / this.FPS);
@@ -60,20 +61,41 @@ const game = {
     bulletsVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (
-                this.player.bullets.some(bullet => {
-                    return this.collision(enemy, bullet)
-                })
-            ) {
-                enemy.posX
+                this.player.bullets.some(bullet =>
+                    this.collision(enemy, bullet)
+                )
+            ) { 
                 enemy.setDie(enemy)
-                console.log(enemy)
-                // this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1)
-                //  this.kills++ kills counter
+                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 2500)
+                //this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1)                //  this.kills++ kills counter
             }
         })
+
+
+        this.player.bullets.forEach(bullet => { // This eliminate the bullet pro the array when the bulle touch the zombie
+            if (
+                this.enemysArr.some(enemy => {
+                    return this.collision(bullet, enemy)
+                })
+            ) {
+                this.player.bullets.splice(this.player.bullets.indexOf(bullet), 1) 
+            }
+        })
+
+        // this.enemysArr.forEach(enemy => {
+        //     if (
+        //         this.player.bullets.some(bullet =>
+        //             this.collision(enemy, bullet)
+        //         )
+        //     ) {
+        //         this.deadEnemiesArr.push(enemy)
+        //         console.log(this.deadEnemiesArr)
+        //         //  this.kills++ kills counter
+        //     }
+        // })
     },
 
-    
+
 
     setDimensions() {
         this.canvas.width = this.width
@@ -102,7 +124,7 @@ const game = {
     },
     generateEnemies() {
         if (this.counterEnemies % 100 === 0)
-            
+
             this.enemysArr.push(new Enemy(this.ctx, this.width, this.height, './img/ZombieMoving.png'))
     },
 

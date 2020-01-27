@@ -1,5 +1,3 @@
-
-
 class Enemy {
     constructor(ctx, gameW, gameH, imgSource, ) {
         this.ctx = ctx
@@ -8,7 +6,7 @@ class Enemy {
         this.gameHeight = gameH
         this.width = 80;
         this.height = 100;
-        this.posX = gameW-100;
+        this.posX = gameW - 100;
         this.posY = randomInt(200, 800)
         this.life = 100;
 
@@ -22,6 +20,7 @@ class Enemy {
         this.image.src = imgSource;
         this.image.frames = 3; // the number of img of the sprite
         this.image.framesIndex = 0;
+        this.enemyDeadArr = [];
 
         this.speed = 0.3 // this set the speed of the zombie
         // this.kills = kills
@@ -43,7 +42,7 @@ class Enemy {
         this.move()
     }
     animate(framesCounter) { // this animates the player
-        if (framesCounter % 5 == 0) {
+        if (framesCounter % 30 == 0) {
             this.image.framesIndex++;
         }
         if (this.image.framesIndex > this.image.frames - 1) {
@@ -52,26 +51,38 @@ class Enemy {
     }
 
     move() {
-        this.posX-=this.speed
+        this.posX -= this.speed
     }
 
     life() {
-        if(this.life <= 0) return
+        if (this.life <= 0) return
     }
 
     setDie(enemy) {
-        enemy.image.src = './img/Bullet.png'
+        enemy.image.frames = 8
+        enemy.image.src = './img/ZombieDeadFinal2.png'
         enemy.speed = 0
+        enemy.width = 110
+        enemy.height = 130
+        if (this.framesCounter % 70 === 0) this.framesCounter = 0
+        this.enemyDeadArr.push(enemy)
+        console.log(this.enemyDeadArr)
+
+        // setTimeout(() => {
+        //     this.enemyDeadArr.splice(this.enemyDeadArr.indexOf(enemy), 1)
+        // }, 2500)
+        // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
+    }
+
+    drawDead() {
+        
     }
 
     die() {
-        
+
     }
 
     kill() {
 
-    }
-    clearBullets() { // this set if the posX < of the target then crear out, always si a little more
-        this.bullets = this.bullets.filter(bull => bull.posX <= bull.targetX);
     }
 }
