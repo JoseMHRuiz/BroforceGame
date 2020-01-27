@@ -9,13 +9,6 @@ class Enemy {
         this.posX = gameW - 100;
         this.posY = randomInt(200, 800)
         this.life = 100;
-
-
-
-        // this.canvas = canvas
-        // Initial Position
-        // this.randomPos = randomPos
-        //Sprite img and size
         this.image = new Image();
         this.image.src = imgSource;
         this.image.frames = 3; // the number of img of the sprite
@@ -59,23 +52,30 @@ class Enemy {
     }
 
     setDie(enemy) {
-        enemy.image.frames = 8
-        enemy.image.src = './img/ZombieDeadFinal2.png'
+        enemy.image.frames = 6
+        enemy.image.src = './img/Zombie2Deifinitive.png'
         enemy.speed = 0
         enemy.width = 110
         enemy.height = 130
         if (this.framesCounter % 70 === 0) this.framesCounter = 0
-        this.enemyDeadArr.push(enemy)
-        console.log(this.enemyDeadArr)
-
         // setTimeout(() => {
         //     this.enemyDeadArr.splice(this.enemyDeadArr.indexOf(enemy), 1)
         // }, 2500)
         // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
     }
 
-    drawDead() {
-        
+    drawDead(enemy,framesCounter) {
+        enemy.draw(framesCounter)
+           enemy.image.frames = 6
+           enemy.image.src = './img/Zombie2Deifinitive.png'
+           enemy.speed = 0
+           enemy.width = 110
+           enemy.height = 130
+           if (this.framesCounter % 70 === 0) this.framesCounter = 0
+        //    setTimeout(() => {
+        //        this.enemyDeadArr.splice(this.enemyDeadArr.indexOf(enemy), 1)
+        //    }, 2500)
+           // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
     }
 
     die() {

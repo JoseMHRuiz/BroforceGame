@@ -19,8 +19,9 @@ const game = {
     score: 0,
     enemysArr: [],
     rect: undefined,
-    deadEnemiesArr : [],
+    deadEnemiesArr: [],
     counterEnemies: 0,
+
 
 
     keys: {
@@ -47,7 +48,7 @@ const game = {
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
-            
+
 
 
         }, 1000 / this.FPS);
@@ -64,37 +65,30 @@ const game = {
                 this.player.bullets.some(bullet =>
                     this.collision(enemy, bullet)
                 )
-            ) { 
-                enemy.setDie(enemy)
-                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 2500)
-                //this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1)                //  this.kills++ kills counter
+            ) {
+                // enemy.setDie(enemy)
+                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1)
+                this.deadEnemiesArr.push(enemy)
+                console.log(this.deadEnemiesArr)
+                setTimeout(() => {
+                    this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
+                }, 1800)
+                //set the enemy a new animation 
             }
         })
-
-
         this.player.bullets.forEach(bullet => { // This eliminate the bullet pro the array when the bulle touch the zombie
             if (
                 this.enemysArr.some(enemy => {
                     return this.collision(bullet, enemy)
                 })
             ) {
-                this.player.bullets.splice(this.player.bullets.indexOf(bullet), 1) 
+                this.player.bullets.splice(this.player.bullets.indexOf(bullet), 1)
             }
         })
-
-        // this.enemysArr.forEach(enemy => {
-        //     if (
-        //         this.player.bullets.some(bullet =>
-        //             this.collision(enemy, bullet)
-        //         )
-        //     ) {
-        //         this.deadEnemiesArr.push(enemy)
-        //         console.log(this.deadEnemiesArr)
-        //         //  this.kills++ kills counter
-        //     }
-        // })
     },
+    setDiedZombies() {
 
+    },
 
 
     setDimensions() {
@@ -108,6 +102,8 @@ const game = {
             // this.enemy.posX--
             enemy.draw(this.framesCounter)
         })
+        this.deadEnemiesArr.forEach((enemy) => enemy.drawDead(enemy, this.framesCounter))
+
 
 
     },
@@ -118,6 +114,7 @@ const game = {
     reSet() {
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
         this.player = new Player(this.ctx, this.width, this.height, this.keys, './img/RamboHQ.png');
+
     },
     clear() {
 
