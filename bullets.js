@@ -8,7 +8,7 @@ class Bullets {
         this.targetX = tarX // Tarjer X&Y gets the number in the player
         this.targetY = tarY
 
-        this.speed = 5 // Defines the speed for the trayectory
+        this.speed = 10 // Defines the speed for the trayectory
 
         this.vecX = undefined; // defines the vector X & Y
         this.vecY = undefined;

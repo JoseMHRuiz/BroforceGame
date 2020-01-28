@@ -48,7 +48,7 @@ class Enemy {
     }
 
     life() {
-        if (this.life <= 0) return
+        if (this.life <= 0) true
     }
 
     setDie(enemy) {

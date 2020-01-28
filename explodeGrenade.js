@@ -1,17 +1,17 @@
-class DeadEnemy {
+class explodeGrenade {
     constructor(ctx, gameW, gameH, posX, posY, imgSource, ) {
         this.ctx = ctx
 
         this.gameWidth = gameW
         this.gameHeight = gameH
-        this.width = 80;
+        this.width = 100;
         this.height = 100;
         this.posX = posX
         this.posY = posY
         this.life = 100;
         this.image = new Image();
         this.image.src = imgSource;
-        this.image.frames = 6; // the number of img of the sprite
+        this.image.frames = 12; // the number of img of the sprite
         this.image.framesIndex = 0;
 
         this.speed = 0 // this set the speed of the zombie
@@ -31,7 +31,17 @@ class DeadEnemy {
             this.height
         );
         this.animate(framesCounter)
-        this.move()
+        // this.move()
+    }
+    drawexplode(grenade, framesCounter) {
+        this.draw(framesCounter)
+          grenade.draw(framesCounter)
+          grenade.image.frames = 12
+          grenade.image.src = './img/explosion-4.png'
+          grenade.speed = 0
+          grenade.width = 110
+          grenade.height = 130
+          if (this.framesCounter % 70 === 0) this.framesCounter = 0
     }
     animate(framesCounter) { // this animates the player
         if (framesCounter % 30 == 0) {
@@ -43,10 +53,6 @@ class DeadEnemy {
     }
 
     move() {
-        this.posX -= this.speed
     }
 
-    life() {
-        if (this.life <= 0) return
-    }
 }

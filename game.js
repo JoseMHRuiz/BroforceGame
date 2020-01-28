@@ -20,13 +20,18 @@ const game = {
     enemysArr: [],
     rect: undefined,
     deadEnemiesArr: [],
+    grenadeExplo: [],
     counterEnemies: 0,
+    totalDeadths: 0,
+
+
 
 
 
     keys: {
         TOP: 38,
-        SPACE: 32
+        SPACE: 32,
+        C: 67,
     },
     init() {
         this.canvas = document.getElementById('myCanvasGame')
@@ -41,14 +46,16 @@ const game = {
                 this.framesCounter = 0;
             }
             this.counterEnemies++
-            this.framesCounter++; // this is the important part for the velocity of the things!!!
+            this.framesCounter++;
+            // this is the important part for the velocity of the things!!!
 
             this.clear(); // clear the canvas every time
             this.drawAll();
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
-
+            this.grenadesVsZombies()
+            this.showScore()
 
 
         }, 1000 / this.FPS);
@@ -59,6 +66,14 @@ const game = {
             enemy.posY < bullet.posY + bullet.height &&
             enemy.posY + enemy.height > bullet.posY;
     },
+
+    showScore() {
+
+        this.ctx.fillStyle = "white";
+        this.ctx.font = '30px ThaleahFat'
+        this.ctx.fillText("⚰️Deaths", 200, 100);
+        this.ctx.fillText(this.totalDeadths, 200, 140);
+    },
     bulletsVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (
@@ -66,13 +81,12 @@ const game = {
                     this.collision(enemy, bullet)
                 )
             ) {
-                setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1) //splice the enemy with a setTimeout
-                this.deadEnemiesArr.push(enemy) // push enemy in a deadEnemy
-                console.log(this.deadEnemiesArr)
-                setTimeout(() => { // set time out for the animation zombie
-                    this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
-                }, 1800)
+                enemy.life -= 30
+                if (enemy.life <= 0)
+
+                    this.setZombieDead(enemy)
             }
+
         })
         this.player.bullets.forEach(bullet => { // This eliminate the bullet pro the array when the bulle touch the zombie
             if (
@@ -84,6 +98,56 @@ const game = {
             }
         })
     },
+
+    grenadesVsZombies() {
+        this.enemysArr.forEach(enemy => {
+            if (
+                this.player.grenades.some(grenade =>
+                    this.collision(enemy, grenade)
+                )
+            ) {
+                enemy.life -= 80
+                if (enemy.life <= 0)
+
+                    this.setZombieDead(enemy)
+
+            }
+
+        })
+        this.player.grenades.forEach(grenade => { // This eliminate the bullet pro the array when the bulle touch the zombie
+            if (
+                this.enemysArr.some(enemy => {
+                    return this.collision(grenade, enemy)
+                })
+            ) {
+
+                this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1)
+                this.setGranadeExplode(grenade)
+            }
+        })
+
+
+
+    },
+
+    setZombieDead(enemy) {
+        this.totalDeadths++
+        setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1) //splice the enemy with a setTimeout
+        this.deadEnemiesArr.push(enemy) // push enemy in a deadEnemy
+        setTimeout(() => { // set time out for the animation zombie
+            this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
+        }, 1800)
+    },
+    setGranadeExplode(grenade) {
+        setTimeout(() => this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1), 1) //splice the enemy with a setTimeout
+        this.grenadeExplo.push(grenade) // push enemy in a deadEnemy
+        setTimeout(() => { // set time out for the animation zombie
+            this.grenadeExplo.splice(this.grenadeExplo.indexOf(grenade), 1)
+        }, 1800)
+        console.log(this.grenadeExplo)
+    },
+
+
     setDimensions() {
         this.canvas.width = this.width
         this.canvas.height = this.height
@@ -97,6 +161,7 @@ const game = {
         })
         // This call the function of the Enemy array and set the new animation!!! NO SE TE OLVIDE ESTO!!!!
         this.deadEnemiesArr.forEach((enemy) => enemy.drawDead(enemy, this.framesCounter))
+        this.grenadeExplo.forEach((granade) => granade.drawexplode(granade, this.framesCounter))
 
 
 
