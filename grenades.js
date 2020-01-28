@@ -65,16 +65,16 @@ class Grenades {
             Math.floor(this.imageExp.width / this.imageExp.frames),
             this.imageExp.height,
             this.posX - 100,
-            this.posY - 150,
-            200,
-            200
+            this.posY - 200,
+            300,
+            300
 
         );
-        if (this.framesCounter % 10 === 0) this.framesCounter = 0
+        if (this.framesCounter % 12 === 0) this.framesCounter = 0
         this.animateExp(framesCounter)
     }
     animate(framesCounter) { // this animates the player
-        if (framesCounter % 30 == 0) {
+        if (framesCounter % 10 == 0) {
             this.image.framesIndex++;
         }
         if (this.image.framesIndex > this.image.frames - 1) {
@@ -82,7 +82,7 @@ class Grenades {
         }
     }
     animateExp(framesCounter) { // this animates the player
-        if (framesCounter % 10 == 0) {
+        if (framesCounter % 12 == 0) {
             this.imageExp.framesIndex++;
         }
         if (this.imageExp.framesIndex > this.imageExp.frames - 1) {

@@ -7,7 +7,7 @@ const shuffle = array => array.sort(() => Math.random() - 0.5);
 
 
 
-const gam = {
+const game = {
     canvas: undefined,
     ctx: undefined,
     width: 1600,
@@ -23,6 +23,8 @@ const gam = {
     grenadeExplo: [],
     counterEnemies: 0,
     totalDeadths: 0,
+    targetX: undefined,
+    targetY: undefined,
     keys: {
         TOP: 38,
         SPACE: 32,
@@ -36,20 +38,38 @@ const gam = {
     },
     start() {
         this.reSet() //Set the images of the bg and the player
+        this.setListeners()
         this.interval = setInterval(() => { // this is the interval, all the moving parts inside
             if (this.framesCounter > 5000) {
                 this.framesCounter = 0;
             }
             this.counterEnemies++
-            this.framesCounter++;  // this is the important part for the velocity of the things!!!
+            this.framesCounter++; // this is the important part for the velocity of the things!!!
             this.clear(); // clear the canvas every time
             this.drawAll();
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
-            this.grenadesVsZombies()
+            this.grenadesVsZombies();
+            this.grenadesExpVsZombies();
+
             this.showScore()
         }, 1000 / this.FPS);
+    },
+    setListeners() {
+        document.addEventListener("keydown", e => {
+            document.onmousemove = e => { // this sets the event of the mouse pointer
+                // this.mouseX = event.pageX // have the set por the pointer
+                // this.mouseY = event.pageY
+                this.targetX = e.pageX
+                this.targetY = e.pageY
+            }
+            // document.addEventListener('keydown')
+            // if (e.initMouseEvent) this.shoot();
+            if (e.keyCode === 32) this.player.shootPistol(this.targetX, this.targetY);
+            if (e.keyCode === 67) this.player.shootGrenades(this.targetX, this.targetY)
+
+        });
     },
     collision(enemy, bullet) {
         return enemy.posX < bullet.posX + bullet.width &&
@@ -84,7 +104,7 @@ const gam = {
     grenadesVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (this.player.grenades.some(grenade => this.collision(enemy, grenade))) {
-                enemy.life -= 80
+                enemy.life -= 110
                 if (enemy.life <= 0)
                     this.setZombieDead(enemy)
             }
@@ -98,7 +118,19 @@ const gam = {
             }
         })
     },
-    
+
+    grenadesExpVsZombies() { // should work with the explosion buuuuuut no
+        this.enemysArr.forEach(enemy => {
+            if (this.grenadeExplo.some(grenade => this.collision(enemy, grenade))) {
+
+                console.log(this.grenadeExplo)
+                enemy.life -= 110
+                if (enemy.life <= 0)
+                    this.setZombieDead(enemy)
+            }
+        })
+    },
+
 
     setZombieDead(enemy) {
         this.totalDeadths++
@@ -145,19 +177,18 @@ const gam = {
         if (this.counterEnemies % 100 === 0)
             this.enemysArr.push(new Enemy(this.ctx, this.width, this.height, './img/ZombieMoving.png'))
     },
-
-
-
-
 }
-window.onload = () => {
-    game.init();
-};
 
 
+window.onload = function () {
+    document.getElementById("start-button").onclick = function () {
+        game.init();
+        document.getElementById('start-button').classList.remove('btn')
 
+        document.getElementById('start-button').classList.add('remove')
 
-// This launch the game
+    };
+}
 // window.onload = () => {
 //     game.init();
 // };

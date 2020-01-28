@@ -3,5 +3,38 @@
      padding: 0;
  }
  canvas {
-     cursor: url(./img/Bullet.png), default
+     /* z-index: 1; */
+     cursor: url(./img/Bullet.png), default;
+     /* padding-top: 30px; */
+     border: 10px solid black
  }
+
+ body {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     align-content: center;
+ }
+ #background {
+     margin-top: 80px;
+     position: absolute;
+     z-index: -2;
+ }
+ button {
+     position: absolute;
+     
+ }
+ .remove {
+    display: none;
+    position: relative;
+ }
+ #backgroundDiv {
+     background: black;
+     background-image: url('./img/ground.png');
+     background-size: 1600 900;
+     position: absolute;
+     display: flex;
+     z-index: 1;
+
+ }
+

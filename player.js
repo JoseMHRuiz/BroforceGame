@@ -35,7 +35,7 @@ class Player {
         this.bullets = [];
         this.grenades = [];
         this.grenadeExplo = []
-        this.setListeners()
+        // this.setListeners()
 
     }
     draw(framesCounter) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
@@ -68,33 +68,17 @@ class Player {
             this.image.framesIndex = 0;
         }
     }
-    setListeners() {
-        document.addEventListener("keydown", e => {
-            document.onmousemove = e => { // this sets the event of the mouse pointer
-                // this.mouseX = event.pageX // have the set por the pointer
-                // this.mouseY = event.pageY
-                this.targetX = e.pageX
-                this.targetY = e.pageY
-            }
-            // document.addEventListener('keydown')
-            // if (e.initMouseEvent) this.shoot();
-            if (e.keyCode === 32) this.shootPistol();
-            if (e.keyCode === 67) this.shootGrenades()
-
-
-        });
+    shootPistol(targetX,targetY) { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
+        this.bullets.push(new Bullets(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height));
     }
-    shootPistol() { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
-        this.bullets.push(new Bullets(this.ctx, this.posX - 50, this.posY - 50, this.targetX, this.targetY, this.width, this.height));
-    }
-    shootGrenades() {
-        this.grenades.push(new Grenades(this.ctx, this.posX - 50, this.posY - 50, this.targetX, this.targetY, this.width, this.height))
+    shootGrenades(targetX, targetY) {
+        this.grenades.push(new Grenades(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height))
     }
     clearBullets() { // this set if the posX < of the target then crear out, always si a little more
-        this.bullets = this.bullets.filter(bull => bull.posX <= bull.targetX);
+        this.bullets = this.bullets.filter(bullet => bullet.posX <= bullet.targetX);
     }
     clearGrenades() {// this set if the posX < of the target then crear out, always si a little more
-        this.grenades = this.grenades.filter(gre => gre.posX <= gre.targetX)
+        this.grenades = this.grenades.filter(grenade => grenade.posX <= grenade.targetX)
     }
 
 }

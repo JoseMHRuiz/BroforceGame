@@ -35,11 +35,19 @@ class Enemy {
         this.move()
     }
     animate(framesCounter) { // this animates the player
-        if (framesCounter % 30 == 0) {
+        if (framesCounter % 18 == 0) {
             this.image.framesIndex++;
         }
         if (this.image.framesIndex > this.image.frames - 1) {
             this.image.framesIndex = 0;
+        }
+    }
+    animateDead(framesCounter) { // this animates the player
+        if (framesCounter % 18 == 0) {
+            this.image.framesIndex++;
+        // }
+        // if (this.image.framesIndex > this.image.frames - 1) {
+            // this.image.framesIndex = 0;
         }
     }
 
@@ -50,28 +58,25 @@ class Enemy {
     life() {
         if (this.life <= 0) true
     }
-
-    setDie(enemy) {
-        enemy.image.frames = 6
-        enemy.image.src = './img/Zombie2Deifinitive.png'
-        enemy.speed = 0
-        enemy.width = 110
-        enemy.height = 130
-        if (this.framesCounter % 70 === 0) this.framesCounter = 0
-        // setTimeout(() => {
-        //     this.enemyDeadArr.splice(this.enemyDeadArr.indexOf(enemy), 1)
-        // }, 2500)
-        // enemy.drawImage(url('./img/ZombieDeadFinal2.png'), 276, 0, this.posX, this.posY, 110, 130)
-    }
-
     drawDead(enemy, framesCounter) { //This draw the deadAnimation passing the parametres!!
-        enemy.draw(framesCounter)
+        this.ctx.drawImage( // this draw the enemy
+            this.image,
+            this.image.framesIndex * Math.round(this.image.width / this.image.frames), // divide the width of the sprite
+            0,
+            Math.floor(this.image.width / this.image.frames),
+            this.image.height,
+            this.posX,
+            this.posY,
+            this.width,
+            this.height
+        );
+        this.animateDead(framesCounter)
         enemy.image.frames = 6
         enemy.image.src = './img/Zombie2Deifinitive.png'
         enemy.speed = 0
         enemy.width = 110
         enemy.height = 130
-        if (this.framesCounter % 70 === 0) this.framesCounter = 0
+        // if (this.framesCounter % 1000 === 0) this.framesCounter = 0
     }
 
     die() {
