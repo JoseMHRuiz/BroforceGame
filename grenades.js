@@ -24,7 +24,7 @@ class Grenades {
 
 
         this.grenades = []
-        this.grenaExplo = []
+        this.grenadeExplo = []
     }
 
     draw() {
@@ -64,8 +64,8 @@ class Grenades {
             0,
             Math.floor(this.imageExp.width / this.imageExp.frames),
             this.imageExp.height,
-            this.posX-100,
-            this.posY-150,
+            this.posX - 100,
+            this.posY - 150,
             200,
             200
 

@@ -34,7 +34,7 @@ class Player {
 
         this.bullets = [];
         this.grenades = [];
-        this.grenaExplo = []
+        this.grenadeExplo = []
         this.setListeners()
 
     }
@@ -50,18 +50,12 @@ class Player {
             this.width,
             this.height
         );
-
         this.animate(framesCounter);
         this.bullets.forEach(bullet => bullet.draw());
         this.clearBullets()
         this.grenades.forEach(grenade => grenade.draw());
         this.clearGrenades()
-
-
-
     }
-
-
     move() {
         this.bullets.forEach(bullet => bullet.move());
         this.grenades.forEach(grenade => grenade.move());
@@ -102,22 +96,5 @@ class Player {
     clearGrenades() {// this set if the posX < of the target then crear out, always si a little more
         this.grenades = this.grenades.filter(gre => gre.posX <= gre.targetX)
     }
-        
-        // setTimeout(() => this.grenades.splice(this.grenades.indexOf(grenade), 1), 1) //splice the enemy with a setTimeout
-        // this.grenaExplo.push(grenade) // push enemy in a deadEnemy
-        // setTimeout(() => { // set time out for the animation zombie
-        //     this.grenaExplo.splice(this.grenaExplo.indexOf(grenade), 1)
-        // }, 1800)
 
-
-        //     if (this.grenades = this.grenades.filter(gre => gre.posX <= gre.targetX))
-        //            this.totalDeadths++
-        //    setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1) //splice the enemy with a setTimeout
-        //    this.deadEnemiesArr.push(enemy) // push enemy in a deadEnemy
-        //    setTimeout(() => { // set time out for the animation zombie
-        //        this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
-        //    }, 1800)
-
-        // }
-    
 }
