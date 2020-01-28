@@ -1,40 +1,60 @@
 * {
-     margin: 0;
-     padding: 0;
- }
- canvas {
-     /* z-index: 1; */
-     cursor: url(./img/Bullet.png), default;
-     /* padding-top: 30px; */
-     border: 10px solid black
- }
+    margin: 0
+}
 
- body {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     align-content: center;
- }
- #background {
-     margin-top: 80px;
-     position: absolute;
-     z-index: -2;
- }
- button {
-     position: absolute;
-     
- }
- .remove {
-    display: none;
-    position: relative;
- }
- #backgroundDiv {
-     background: black;
-     background-image: url('./img/ground.png');
-     background-size: 1600 900;
-     position: absolute;
-     display: flex;
-     z-index: 1;
+body {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    
+}
+canvas {
+    cursor: url(./img/Bullet.png), default
+}
 
- }
+#main-menu {
+    height: 100vh;
+    text-align: center;
+    background: white url(./img/GameBackground.png) no-repeat center / cover;
+    z-index: 0
+}
+
+#main-menu img {
+    width: 600px;
+    display: block;
+    /* margin-bottom: 0; */
+}
+
+div p {
+    margin: 20px 0;
+    color: white;
+}
+
+.btn {
+    display: inline-block;
+    padding: 20px 0;
+    width: 200px;
+    color: grey;
+    border: 2px solid grey;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    letter-spacing: 5px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: grey;
+}
+
+
+/* Alingner */
+
+.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 

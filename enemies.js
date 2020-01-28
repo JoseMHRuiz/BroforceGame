@@ -15,7 +15,7 @@ class Enemy {
         this.image.framesIndex = 0;
         this.enemyDeadArr = [];
 
-        this.speed = 0.3 // this set the speed of the zombie
+        this.speed = randomIntVel(0.2 , 2) // this set the speed of the zombie
         // this.kills = kills
     }
 

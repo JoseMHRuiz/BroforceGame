@@ -3,6 +3,8 @@
 
 const randomFloat = (min, max) => Math.random() * (max - min) + min;
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+const randomIntVel = (min, max) => Math.random() * (max - min + 1) + min;
+
 const shuffle = array => array.sort(() => Math.random() - 0.5);
 
 
@@ -61,7 +63,7 @@ const game = {
             document.onmousemove = e => { // this sets the event of the mouse pointer
                 // this.mouseX = event.pageX // have the set por the pointer
                 // this.mouseY = event.pageY
-                this.targetX = e.pageX
+                this.targetX = e.pageX 
                 this.targetY = e.pageY
             }
             // document.addEventListener('keydown')
@@ -179,16 +181,10 @@ const game = {
     },
 }
 
-
 window.onload = function () {
-    document.getElementById("start-button").onclick = function () {
+    document.getElementById("startBtn").onclick = function () {
+        document.getElementById("main-menu").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
         game.init();
-        document.getElementById('start-button').classList.remove('btn')
-
-        document.getElementById('start-button').classList.add('remove')
-
-    };
+    }
 }
-// window.onload = () => {
-//     game.init();
-// };
