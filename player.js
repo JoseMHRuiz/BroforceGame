@@ -8,7 +8,7 @@ class Player {
         this.width = 100;
         this.height = 140;
 
-        this.posX = 200;
+        this.posX = 190;
         this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
         // this.posY0 = this.posY // maybe for the moving player!!
 
@@ -23,7 +23,7 @@ class Player {
 
         this.image = new Image();
         this.image.src = imgSource;
-        this.image.frames = 28; // the number of img of the sprite
+        this.image.frame = 28; // the number of img of the sprite
         this.image.framesIndex = 0;
 
         this.keys = keys;
@@ -40,19 +40,19 @@ class Player {
     }
 
    
-    draw(framesCounter) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
+    draw(framesCounter, frames) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
         this.ctx.drawImage( // this draw the player
             this.image,
-            this.image.framesIndex * Math.round(this.image.width / this.image.frames), // divide the width of the sprite
+            this.image.framesIndex * Math.round(this.image.width / frames), // divide the width of the sprite
             0,
-            Math.floor(this.image.width / this.image.frames),
+            Math.floor(this.image.width / frames),
             this.image.height,
             this.posX,
             this.posY,
             this.width,
             this.height
         );
-        this.animate(framesCounter);
+        this.animate(framesCounter, frames);
         this.bullets.forEach(bullet => bullet.draw());
         this.clearBullets()
         this.grenades.forEach(grenade => grenade.draw());
@@ -62,11 +62,11 @@ class Player {
         this.bullets.forEach(bullet => bullet.move());
         this.grenades.forEach(grenade => grenade.move());
     }
-    animate(framesCounter) { // this animates the player
+    animate(framesCounter, frames) { // this animates the player
         if (framesCounter % 5 == 0) {
             this.image.framesIndex++;
         }
-        if (this.image.framesIndex > this.image.frames - 1) {
+        if (this.image.framesIndex > frames - 1) {
             this.image.framesIndex = 0;
         }
     }

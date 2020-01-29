@@ -34,11 +34,11 @@ const game = {
         C: 67,
 
     },
-    init(img) {
+    init(img, frames) {
         this.canvas = document.getElementById('myCanvasGame')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
-        this.start(img)
+        this.start(img, frames)
     },
     restore() {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -48,7 +48,7 @@ const game = {
         this.enemysArr = []
         this.live = 1000
     },
-    start(img) {
+    start(img, frames) {
         this.reSet(img) //Set the images of the bg and the player
         this.setListeners()
         this.interval = setInterval(() => { // this is the interval, all the moving parts inside
@@ -58,7 +58,7 @@ const game = {
             this.counterEnemies++
             this.framesCounter++; // this is the important part for the velocity of the things!!!
             this.clear(); // clear the canvas every time
-            this.drawAll();
+            this.drawAll(frames);
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
@@ -187,10 +187,10 @@ const game = {
         this.canvas.width = this.width
         this.canvas.height = this.height
     },
-    drawAll() {
+    drawAll(frames) {
         this.backgroud.draw()
         this.barrier.draw()
-        this.player.draw(this.framesCounter); //IMPORTANT!! set the timming of the sprite player!!!
+        this.player.draw(this.framesCounter, frames); //IMPORTANT!! set the timming of the sprite player!!!
         this.enemysArr.forEach((enemy) => enemy.draw(this.framesCounter))
         // This call the function of the Enemy array and set the new animation!!! NO SE TE OLVIDE ESTO!!!!
         this.deadEnemiesArr.forEach((enemy) => enemy.drawDead(enemy, this.framesCounter))
@@ -231,19 +231,19 @@ window.onload = function () {
     document.getElementById("startRambo").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/RamboStrong.png');
+        game.init('./img/RamboHQ.png', 11);
 
     }
     document.getElementById("startChuck").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/Chuck.png');
+        game.init('./img/Chuck-patada.png', 8);
 
     }
     document.getElementById("startTerminator").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/Terminator.png');
+        game.init('./img/Terminator-smash.png', 8);
 
     }
     document.getElementById("Restart").onclick = function () {
