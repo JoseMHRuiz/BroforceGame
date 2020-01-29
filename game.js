@@ -27,16 +27,26 @@ const game = {
     totalDeadths: 0,
     targetX: undefined,
     targetY: undefined,
+    live: 1000,
     keys: {
         TOP: 38,
         SPACE: 32,
         C: 67,
+
     },
     init() {
         this.canvas = document.getElementById('myCanvasGame')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
         this.start()
+    },
+    restore() {
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.clear()
+        clearInterval(this.interval)
+        this.totalDeadths = 0
+        this.enemysArr = []
+        this.live = 1000
     },
     start() {
         this.reSet() //Set the images of the bg and the player
@@ -54,7 +64,9 @@ const game = {
             this.bulletsVsZombies();
             this.grenadesVsZombies();
             this.grenadesExpVsZombies();
-
+            this.zombieVsBarrier()
+            this.gameOver()
+            this.liveBar(this.live)
             this.showScore()
         }, 1000 / this.FPS);
     },
@@ -63,7 +75,7 @@ const game = {
             document.onmousemove = e => { // this sets the event of the mouse pointer
                 // this.mouseX = event.pageX // have the set por the pointer
                 // this.mouseY = event.pageY
-                this.targetX = e.pageX 
+                this.targetX = e.pageX
                 this.targetY = e.pageY
             }
             // document.addEventListener('keydown')
@@ -79,18 +91,53 @@ const game = {
             enemy.posY < bullet.posY + bullet.height &&
             enemy.posY + enemy.height > bullet.posY;
     },
+    liveBar(live) {
+        // this.ctx.beginPath();
+        // this.ctx.rect(20, 40, live, 10);
+        // this.ctx.lineWidth = "5";
+        // this.ctx.strokeStyle = 'green'
+
+        // this.ctx.stroke();
+
+        this.ctx.beginPath();
+        this.ctx.rect(200, 40, live, 15);
+        // this.ctx.lineWidth = "1";
+        this.ctx.strokeStyle = '#a69867'
+        this.ctx.fill()
+        this.ctx.stroke();
+
+
+
+
+
+        this.ctx.fillStyle = "white";
+        this.ctx.font = '30px ThaleahFat'
+        this.ctx.fillText(`❤️Life ${live}`, 200, 25);
+    },
 
     showScore() {
         this.ctx.fillStyle = "white";
         this.ctx.font = '30px ThaleahFat'
-        this.ctx.fillText("⚰️Deaths", 200, 100);
-        this.ctx.fillText(this.totalDeadths, 200, 140);
+        this.ctx.fillText(`⚰️Deaths ${this.totalDeadths}`, 200, 100);
+    },
+    zombieVsBarrier() {
+        this.enemysArr.forEach(enemy => {
+            if (this.collision(enemy, this.barrier))
+                this.barrierLive(enemy)
+        })
+    },
+    barrierLive(enemy) {
+        enemy.speed = 0
+        this.live -= 10
+
+
+
     },
     bulletsVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (this.player.bullets.some(bullet => this.collision(enemy, bullet))) {
-                enemy.life -= 30
-                if (enemy.life <= 0)
+                enemy.live -= 30
+                if (enemy.live <= 0)
                     this.setZombieDead(enemy)
             }
         })
@@ -106,8 +153,8 @@ const game = {
     grenadesVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (this.player.grenades.some(grenade => this.collision(enemy, grenade))) {
-                enemy.life -= 110
-                if (enemy.life <= 0)
+                enemy.live -= 110
+                if (enemy.live <= 0)
                     this.setZombieDead(enemy)
             }
         })
@@ -115,7 +162,6 @@ const game = {
             if (this.enemysArr.some(enemy => {
                     return this.collision(grenade, enemy)
                 })) {
-                this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1)
                 this.setGranadeExplode(grenade)
             }
         })
@@ -124,10 +170,8 @@ const game = {
     grenadesExpVsZombies() { // should work with the explosion buuuuuut no
         this.enemysArr.forEach(enemy => {
             if (this.grenadeExplo.some(grenade => this.collision(enemy, grenade))) {
-
-                console.log(this.grenadeExplo)
-                enemy.life -= 110
-                if (enemy.life <= 0)
+                enemy.live -= 110
+                if (enemy.live <= 0)
                     this.setZombieDead(enemy)
             }
         })
@@ -141,6 +185,9 @@ const game = {
         setTimeout(() => { // set time out for the animation zombie
             this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
         }, 1800)
+    },
+    setZombieStop() {
+
     },
     setGranadeExplode(grenade) {
         setTimeout(() => this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1), 1) //splice the enemy with a setTimeout
@@ -157,6 +204,7 @@ const game = {
     },
     drawAll() {
         this.backgroud.draw()
+        this.barrier.draw()
         this.player.draw(this.framesCounter); //IMPORTANT!! set the timming of the sprite player!!!
         this.enemysArr.forEach((enemy) => enemy.draw(this.framesCounter))
         // This call the function of the Enemy array and set the new animation!!! NO SE TE OLVIDE ESTO!!!!
@@ -169,22 +217,39 @@ const game = {
     },
     reSet() {
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
+        this.barrier = new Barrier(this.ctx)
         this.player = new Player(this.ctx, this.width, this.height, this.keys, './img/RamboHQ.png');
 
     },
     clear() {
-
+        this.ctx.clearRect(0, 0, this.width, this.height);
     },
     generateEnemies() {
         if (this.counterEnemies % 100 === 0)
             this.enemysArr.push(new Enemy(this.ctx, this.width, this.height, './img/ZombieMoving.png'))
     },
+    gameOver() {
+        if (this.live <= 0) {
+            document.getElementById("game-over").style.display = "block"
+            document.getElementById("myCanvasGame").style.display = "none"
+        }
+    },
 }
 
 window.onload = function () {
+            document.getElementById("game-over").style.display = "none"
+
     document.getElementById("startBtn").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
         game.init();
+
+    }
+    document.getElementById("Restart").onclick = function () {
+        game.restore()
+        document.getElementById("game-over").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
+        game.init()
+
     }
 }

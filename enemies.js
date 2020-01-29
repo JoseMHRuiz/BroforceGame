@@ -6,9 +6,9 @@ class Enemy {
         this.gameHeight = gameH
         this.width = 80;
         this.height = 100;
-        this.posX = gameW - 100;
+        this.posX = gameW;
         this.posY = randomInt(200, 800)
-        this.life = 100;
+        this.live = 100;
         this.image = new Image();
         this.image.src = imgSource;
         this.image.frames = 3; // the number of img of the sprite
@@ -55,9 +55,6 @@ class Enemy {
         this.posX -= this.speed
     }
 
-    life() {
-        if (this.life <= 0) true
-    }
     drawDead(enemy, framesCounter) { //This draw the deadAnimation passing the parametres!!
         this.ctx.drawImage( // this draw the enemy
             this.image,
@@ -78,11 +75,6 @@ class Enemy {
         enemy.height = 130
         // if (this.framesCounter % 1000 === 0) this.framesCounter = 0
     }
-
-    die() {
-
-    }
-
     kill() {
 
     }

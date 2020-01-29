@@ -6,9 +6,9 @@ class Player {
         this.gameHeight = gameH;
 
         this.width = 100;
-        this.height = 120;
+        this.height = 140;
 
-        this.posX = 20;
+        this.posX = 200;
         this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
         // this.posY0 = this.posY // maybe for the moving player!!
 
@@ -38,6 +38,8 @@ class Player {
         // this.setListeners()
 
     }
+
+   
     draw(framesCounter) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
         this.ctx.drawImage( // this draw the player
             this.image,
