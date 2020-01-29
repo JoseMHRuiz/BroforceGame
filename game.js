@@ -227,30 +227,55 @@ const game = {
 
 window.onload = function () {
     document.getElementById("game-over").style.display = "none"
+    rambo()
+    chuck()
+    terminator()
+    document.getElementById("Restart").onclick = function () {
+        game.restore()
+        document.getElementById("game-over").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
+        game.init()
 
+    }
+}
+
+let chuckImg = {
+    img: './img/Chuck-patada.png',
+    frames: 8,
+}
+let RamboImg = {
+    img: './img/RamboHQ.png',
+    frames: 11,
+}
+let TerminatorImg = {
+    img: './img/Terminator-smash.png',
+    frames: 8,
+}
+
+
+let chuck = () => {
+    document.getElementById("startChuck").onclick = function () {
+        document.getElementById("main-menu").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
+        game.init(chuckImg.img, chuckImg.frames);
+    }
+}
+
+let rambo = () => {
     document.getElementById("startRambo").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
         game.init('./img/RamboHQ.png', 11);
 
     }
-    document.getElementById("startChuck").onclick = function () {
-        document.getElementById("main-menu").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/Chuck-patada.png', 8);
+}
 
-    }
+
+let terminator = () => {
     document.getElementById("startTerminator").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
         game.init('./img/Terminator-smash.png', 8);
-
-    }
-    document.getElementById("Restart").onclick = function () {
-        game.restore()
-        document.getElementById("game-over").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init()
 
     }
 }
