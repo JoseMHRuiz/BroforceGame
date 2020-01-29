@@ -34,11 +34,11 @@ const game = {
         C: 67,
 
     },
-    init() {
+    init(img) {
         this.canvas = document.getElementById('myCanvasGame')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
-        this.start()
+        this.start(img)
     },
     restore() {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -48,8 +48,8 @@ const game = {
         this.enemysArr = []
         this.live = 1000
     },
-    start() {
-        this.reSet() //Set the images of the bg and the player
+    start(img) {
+        this.reSet(img) //Set the images of the bg and the player
         this.setListeners()
         this.interval = setInterval(() => { // this is the interval, all the moving parts inside
             if (this.framesCounter > 5000) {
@@ -73,13 +73,9 @@ const game = {
     setListeners() {
         document.addEventListener("keydown", e => {
             document.onmousemove = e => { // this sets the event of the mouse pointer
-                // this.mouseX = event.pageX // have the set por the pointer
-                // this.mouseY = event.pageY
                 this.targetX = e.pageX
                 this.targetY = e.pageY
             }
-            // document.addEventListener('keydown')
-            // if (e.initMouseEvent) this.shoot();
             if (e.keyCode === 32) this.player.shootPistol(this.targetX, this.targetY);
             if (e.keyCode === 67) this.player.shootGrenades(this.targetX, this.targetY)
 
@@ -92,24 +88,13 @@ const game = {
             enemy.posY + enemy.height > bullet.posY;
     },
     liveBar(live) {
-        // this.ctx.beginPath();
-        // this.ctx.rect(20, 40, live, 10);
-        // this.ctx.lineWidth = "5";
-        // this.ctx.strokeStyle = 'green'
-
-        // this.ctx.stroke();
-
         this.ctx.beginPath();
         this.ctx.rect(200, 40, live, 15);
         // this.ctx.lineWidth = "1";
         this.ctx.strokeStyle = '#a69867'
         this.ctx.fill()
+
         this.ctx.stroke();
-
-
-
-
-
         this.ctx.fillStyle = "white";
         this.ctx.font = '30px ThaleahFat'
         this.ctx.fillText(`❤️Life ${live}`, 200, 25);
@@ -215,10 +200,14 @@ const game = {
         this.player.move()
 
     },
-    reSet() {
+    reSet(img) {
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
         this.barrier = new Barrier(this.ctx)
-        this.player = new Player(this.ctx, this.width, this.height, this.keys, './img/RamboHQ.png');
+        this.player = new Player(this.ctx, this.width, this.height, this.keys, img);
+
+    },
+    terminator() {
+        this.player = new Player(this.ctx, this.width, this.height, this.keys, './img/ZombieMoving.png');
 
     },
     clear() {
@@ -237,12 +226,24 @@ const game = {
 }
 
 window.onload = function () {
-            document.getElementById("game-over").style.display = "none"
+    document.getElementById("game-over").style.display = "none"
 
-    document.getElementById("startBtn").onclick = function () {
+    document.getElementById("startRambo").onclick = function () {
         document.getElementById("main-menu").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
-        game.init();
+        game.init('./img/RamboStrong.png');
+
+    }
+    document.getElementById("startChuck").onclick = function () {
+        document.getElementById("main-menu").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
+        game.init('./img/Chuck.png');
+
+    }
+    document.getElementById("startTerminator").onclick = function () {
+        document.getElementById("main-menu").style.display = "none"
+        document.getElementById("myCanvasGame").style.display = "block"
+        game.init('./img/Terminator.png');
 
     }
     document.getElementById("Restart").onclick = function () {

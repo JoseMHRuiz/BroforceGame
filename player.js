@@ -23,7 +23,7 @@ class Player {
 
         this.image = new Image();
         this.image.src = imgSource;
-        this.image.frames = 11; // the number of img of the sprite
+        this.image.frames = 28; // the number of img of the sprite
         this.image.framesIndex = 0;
 
         this.keys = keys;
