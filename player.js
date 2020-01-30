@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, gameW, gameH, keys, imgSource) {
+    constructor(ctx, gameW, gameH, keys, imgSource, frame) {
         this.ctx = ctx;
 
         this.gameWidth = gameW;
@@ -10,11 +10,7 @@ class Player {
 
         this.posX = 190;
         this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
-        // this.posY0 = this.posY // maybe for the moving player!!
-
-        // this.mouseX = undefined; //define the mouse position for the pointer???
-        // this.mouseY = undefined;
-
+   
         this.targetX = undefined; //define the target, so we can take the distance position
         this.targetY = undefined;
 
@@ -36,6 +32,9 @@ class Player {
         this.grenades = [];
         this.grenadeExplo = []
         // this.setListeners()
+
+        this.shoot = shoot
+        this.throw = throw2
 
     }
 
@@ -72,20 +71,12 @@ class Player {
     }
     shootPistol(targetX, targetY) { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
         this.bullets.push(new Bullets(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height));
-        new Howl({
-            src: ['./sounds/shot.wav'],
-            volume: 0.2,
-            autoplay: true
-        });
+        this.shoot.play()
 
     }
     shootGrenades(targetX, targetY) {
         this.grenades.push(new Grenades(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height))
-        new Howl({
-            src: ['./sounds/sfx_throw.wav'],
-            volume: 0.2,
-            autoplay: true
-        });
+        this.throw.play()
     }
     clearBullets() { // this set if the posX < of the target then crear out, always si a little more
         this.bullets = this.bullets.filter(bullet => bullet.posX <= bullet.targetX);

@@ -12,6 +12,7 @@ class Grenades {
         this.posY0 = this.posX
         this.vecX = undefined; // defines the vector X & Y
         this.vecY = undefined;
+        
         this.image = new Image();
         this.image.src = './img/Grenade.png';
         this.image.frames = 12; // the number of img of the sprite
