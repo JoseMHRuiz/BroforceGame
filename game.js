@@ -7,9 +7,6 @@ const randomIntVel = (min, max) => Math.random() * (max - min + 1) + min;
 
 const shuffle = array => array.sort(() => Math.random() - 0.5);
 
-
-
-
 const game = {
     canvas: undefined,
     ctx: undefined,
@@ -41,12 +38,6 @@ const game = {
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
         this.start(img, frames)
-        new Howl({
-            src: ['./sounds/unreal-tournament-main-theme.mp3'],
-            autoplay: true,
-            loop: true,
-            volume: 0.2,
-        });
     },
     restore() {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -76,7 +67,6 @@ const game = {
             this.gameOver()
             LiveBar.draw(this.live)
             Score.draw(this.totalDeadths)
-
         }, 1000 / this.FPS);
     },
     clear() {
@@ -98,7 +88,6 @@ const game = {
         this.unstop = unstop
         this.impre = impre
         this.good = good
-
     },
     drawAll(frames) {
         this.backgroud.draw()
@@ -194,7 +183,7 @@ const game = {
             this.grenadeExplo.splice(this.grenadeExplo.indexOf(grenade), 1)
         }, 1800)
     },
-    
+
     moveAll() {
         this.player.move()
 
@@ -236,6 +225,7 @@ const game = {
         if (this.live <= 0) {
             document.getElementById("game-over").style.display = "block"
             document.getElementById("myCanvasGame").style.display = "none"
+            main.stop()
 
         }
     },
@@ -247,75 +237,21 @@ const game = {
 window.onload = function () {
 
     document.getElementById("game-over").style.display = "none"
+    document.getElementById('myCanvasGame').style.display = 'none'
     rambo()
     chuck()
     terminator()
     document.getElementById("Restart").onclick = function () {
         game.restore()
-        sound.play()
         document.getElementById("game-over").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init()
-
+        document.getElementById("main-menu").style.display = "block"
+        main.play()
     }
 }
 
-let chuckImg = {
-    img: './img/Chuck-patada.png',
-    frames: 8,
-}
-let RamboImg = {
-    img: './img/RamboHQ.png',
-    frames: 11,
-}
-let TerminatorImg = {
-    img: './img/Terminator-smash.png',
-    frames: 8,
-}
-
-
-let chuck = () => {
-    document.getElementById("startChuck").onclick = function () {
-        document.getElementById("main-menu").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init(chuckImg.img, chuckImg.frames);
-    }
-}
-
-let rambo = () => {
-    document.getElementById("startRambo").onclick = function () {
-        document.getElementById("main-menu").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/RamboHQ.png', 11);
-
-    }
-}
-
-
-let terminator = () => {
-    document.getElementById("startTerminator").onclick = function () {
-        document.getElementById("main-menu").style.display = "none"
-        document.getElementById("myCanvasGame").style.display = "block"
-        game.init('./img/Terminator-smash.png', 8);
-
-    }
-}
-
-
-// let sounds = new Howl({
-//     unreal: {
-//         src: ['./sounds/Unreal.mp3'],
-//         volume: 0.4,
-//         autoplay: true
-//     },
-//     hit1: {
-//         src: ['./sounds/Zombie_hit_1.wav'],
-//         volume: 0.4,
-//         autoplay: true
-//     },
-//     hit2: {
-//         src: ['./sounds/Unreal.mp3'],
-//         volume: 0.4,
-//         autoplay: true
-//     }
-// })
+let main = new Howl({
+    src: ['./sounds/unreal-tournament-main-theme.mp3'],
+    autoplay: false,
+    loop: true,
+    volume: 0.6,
+});

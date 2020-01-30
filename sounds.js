@@ -1,5 +1,8 @@
-let volumeEffect = 0.5
-let volumeVoice = 0.4
+let volumeEffect = 0.3
+let volumeVoice = 0.5
+let mainMusic = 0.6
+
+
 
 let shoot = new Howl({
     src: ['./sounds/shot.wav'],

@@ -19,7 +19,7 @@ class Player {
 
         this.image = new Image();
         this.image.src = imgSource;
-        this.image.frame = 28; // the number of img of the sprite
+        this.image.frame = frame; // the number of img of the sprite
         this.image.framesIndex = 0;
 
         this.keys = keys;
@@ -39,19 +39,19 @@ class Player {
     }
 
 
-    draw(framesCounter, frames) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
+    draw(framesCounter, frame) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
         this.ctx.drawImage( // this draw the player
             this.image,
-            this.image.framesIndex * Math.round(this.image.width / frames), // divide the width of the sprite
+            this.image.framesIndex * Math.round(this.image.width / frame), // divide the width of the sprite
             0,
-            Math.floor(this.image.width / frames),
+            Math.floor(this.image.width / frame),
             this.image.height,
             this.posX,
             this.posY,
             this.width,
             this.height
         );
-        this.animate(framesCounter, frames);
+        this.animate(framesCounter, frame);
         this.bullets.forEach(bullet => bullet.draw());
         this.clearBullets()
         this.grenades.forEach(grenade => grenade.draw());
@@ -61,11 +61,11 @@ class Player {
         this.bullets.forEach(bullet => bullet.move());
         this.grenades.forEach(grenade => grenade.move());
     }
-    animate(framesCounter, frames) { // this animates the player
+    animate(framesCounter, frame) { // this animates the player
         if (framesCounter % 5 == 0) {
             this.image.framesIndex++;
         }
-        if (this.image.framesIndex > frames - 1) {
+        if (this.image.framesIndex > frame - 1) {
             this.image.framesIndex = 0;
         }
     }
