@@ -39,7 +39,7 @@ class Player {
 
     }
 
-   
+
     draw(framesCounter, frames) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
         this.ctx.drawImage( // this draw the player
             this.image,
@@ -70,16 +70,27 @@ class Player {
             this.image.framesIndex = 0;
         }
     }
-    shootPistol(targetX,targetY) { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
+    shootPistol(targetX, targetY) { // this set push the bullets with the coordenates already inside, correcting some posY&X for the bullet
         this.bullets.push(new Bullets(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height));
+        new Howl({
+            src: ['./sounds/shot.wav'],
+            volume: 0.2,
+            autoplay: true
+        });
+
     }
     shootGrenades(targetX, targetY) {
         this.grenades.push(new Grenades(this.ctx, this.posX - 50, this.posY - 50, targetX, targetY, this.width, this.height))
+        new Howl({
+            src: ['./sounds/sfx_throw.wav'],
+            volume: 0.2,
+            autoplay: true
+        });
     }
     clearBullets() { // this set if the posX < of the target then crear out, always si a little more
         this.bullets = this.bullets.filter(bullet => bullet.posX <= bullet.targetX);
     }
-    clearGrenades() {// this set if the posX < of the target then crear out, always si a little more
+    clearGrenades() { // this set if the posX < of the target then crear out, always si a little more
         this.grenades = this.grenades.filter(grenade => grenade.posX <= grenade.targetX)
     }
 

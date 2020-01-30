@@ -9,6 +9,7 @@ const shuffle = array => array.sort(() => Math.random() - 0.5);
 
 
 
+
 const game = {
     canvas: undefined,
     ctx: undefined,
@@ -25,6 +26,7 @@ const game = {
     grenadeExplo: [],
     counterEnemies: 0,
     totalDeadths: 0,
+    numberOfEnemies: 100,
     targetX: undefined,
     targetY: undefined,
     live: 1000,
@@ -65,9 +67,11 @@ const game = {
             this.grenadesVsZombies();
             this.grenadesExpVsZombies();
             this.zombieVsBarrier()
+            this.level()
             this.gameOver()
             this.liveBar(this.live)
             this.showScore()
+
         }, 1000 / this.FPS);
     },
     setListeners() {
@@ -103,7 +107,7 @@ const game = {
     showScore() {
         this.ctx.fillStyle = "white";
         this.ctx.font = '30px ThaleahFat'
-        this.ctx.fillText(`⚰️Deaths ${this.totalDeadths}`, 200, 100);
+        this.ctx.fillText(`⚰️Kill's ${this.totalDeadths}`, 200, 100);
     },
     zombieVsBarrier() {
         this.enemysArr.forEach(enemy => {
@@ -113,17 +117,17 @@ const game = {
     },
     barrierLive(enemy) {
         enemy.speed = 0
-        this.live -= 10
-
-
-
+        this.live -= 1
     },
     bulletsVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (this.player.bullets.some(bullet => this.collision(enemy, bullet))) {
+                this.zombieHit1.play()
                 enemy.live -= 30
-                if (enemy.live <= 0)
+                if (enemy.live <= 0) {
+                    this.zombieDead1.play()
                     this.setZombieDead(enemy)
+                }
             }
         })
         this.player.bullets.forEach(bullet => { // This eliminate the bullet pro the array when the bulle touch the zombie
@@ -134,7 +138,6 @@ const game = {
             }
         })
     },
-
     grenadesVsZombies() {
         this.enemysArr.forEach(enemy => {
             if (this.player.grenades.some(grenade => this.collision(enemy, grenade))) {
@@ -151,7 +154,6 @@ const game = {
             }
         })
     },
-
     grenadesExpVsZombies() { // should work with the explosion buuuuuut no
         this.enemysArr.forEach(enemy => {
             if (this.grenadeExplo.some(grenade => this.collision(enemy, grenade))) {
@@ -161,8 +163,6 @@ const game = {
             }
         })
     },
-
-
     setZombieDead(enemy) {
         this.totalDeadths++
         setTimeout(() => this.enemysArr.splice(this.enemysArr.indexOf(enemy), 1), 1) //splice the enemy with a setTimeout
@@ -170,13 +170,15 @@ const game = {
         setTimeout(() => { // set time out for the animation zombie
             this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
         }, 1800)
-    },
-    setZombieStop() {
+        this.soundsCounter()
+
 
     },
     setGranadeExplode(grenade) {
         setTimeout(() => this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1), 1) //splice the enemy with a setTimeout
         this.grenadeExplo.push(grenade) // push enemy in a deadEnemy
+        this.explosion.play()
+        console.log(this.grenadeExplo)
         setTimeout(() => { // set time out for the animation zombie
             this.grenadeExplo.splice(this.grenadeExplo.indexOf(grenade), 1)
         }, 1800)
@@ -200,10 +202,81 @@ const game = {
         this.player.move()
 
     },
+
+    soundsCounter() {
+        switch (this.totalDeadths) {
+            case 5:
+                new Howl({
+                    src: ['./sounds/Unreal.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 10:
+                new Howl({
+                    src: ['./sounds/Erradi.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 15:
+                new Howl({
+                    src: ['./sounds/BloodBath.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 20:
+                new Howl({
+                    src: ['./sounds/KillingMachine.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 25:
+                new Howl({
+                    src: ['./sounds/Unstopp.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 30:
+                new Howl({
+                    src: ['./sounds/Impresive.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+            case 35:
+                new Howl({
+                    src: ['./sounds/GoodLike.mp3'],
+                    volume: 0.4,
+                    autoplay: true
+                });
+                break;
+        }
+
+    },
     reSet(img) {
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
         this.barrier = new Barrier(this.ctx)
         this.player = new Player(this.ctx, this.width, this.height, this.keys, img);
+        this.zombieHit1 = new Howl({
+            src: ['./sounds/Zombie_hit_1.wav'],
+            volume: 0.6,
+        });
+        this.zombieHit2 = new Howl({
+            src: ['./sounds/Zombie_hit_2.wav'],
+            volume: 0.6,
+        });
+        this.zombieDead1 = new Howl({
+            src: ['./sounds/Zombie_dead_1.wav'],
+            volume: 0.6,
+        });
+        this.explosion = new Howl({
+            src: ['./sounds/explosion04.ogg'],
+            volume: 0.6,
+        });
 
     },
     terminator() {
@@ -214,24 +287,34 @@ const game = {
         this.ctx.clearRect(0, 0, this.width, this.height);
     },
     generateEnemies() {
-        if (this.counterEnemies % 100 === 0)
+        if (this.counterEnemies % this.numberOfEnemies === 0)
             this.enemysArr.push(new Enemy(this.ctx, this.width, this.height, './img/ZombieMoving.png'))
+    },
+    level() {
+      if(this.totalDeadths === 1) this.numberOfEnemies = 50
     },
     gameOver() {
         if (this.live <= 0) {
             document.getElementById("game-over").style.display = "block"
             document.getElementById("myCanvasGame").style.display = "none"
+
         }
     },
 }
 
 window.onload = function () {
+
     document.getElementById("game-over").style.display = "none"
+    new Howl({
+        src: ['./sounds/unreal-tournament-main-theme.mp3'],
+        volume: 0.6,
+    })
     rambo()
     chuck()
     terminator()
     document.getElementById("Restart").onclick = function () {
         game.restore()
+        sound.play()
         document.getElementById("game-over").style.display = "none"
         document.getElementById("myCanvasGame").style.display = "block"
         game.init()
@@ -279,3 +362,22 @@ let terminator = () => {
 
     }
 }
+
+
+// let sounds = new Howl({
+//     unreal: {
+//         src: ['./sounds/Unreal.mp3'],
+//         volume: 0.4,
+//         autoplay: true
+//     },
+//     hit1: {
+//         src: ['./sounds/Zombie_hit_1.wav'],
+//         volume: 0.4,
+//         autoplay: true
+//     },
+//     hit2: {
+//         src: ['./sounds/Unreal.mp3'],
+//         volume: 0.4,
+//         autoplay: true
+//     }
+// })
