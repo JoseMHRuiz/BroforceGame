@@ -35,11 +35,11 @@ const game = {
     },
     showMessage: false,
     message: undefined,
-    init(img, frames) {
+    init() {
         this.canvas = document.getElementById('myCanvasGame')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
-        this.start(img, frames)
+        this.start()
     },
     restore() {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -49,8 +49,8 @@ const game = {
         this.enemysArr = []
         this.live = 1000
     },
-    start(img, frames) {
-        this.reSet(img) //Set the images of the bg and the player
+    start() {
+        this.reSet() //Set the images of the bg and the player
         this.setListeners()
         this.interval = setInterval(() => { // this is the interval, all the moving parts inside
             if (this.framesCounter > 5000) {
@@ -59,7 +59,7 @@ const game = {
             this.counterEnemies++
             this.framesCounter++; // this is the important part for the velocity of the things!!!
             this.clear(); // clear the canvas every time
-            this.drawAll(frames);
+            this.drawAll();
             this.generateEnemies();
             this.moveAll();
             this.bulletsVsZombies();
@@ -75,13 +75,26 @@ const game = {
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
     },
-    reSet(img) {
+    setChuck() {
+        this.chuck = new Chuck(this.ctx, this.width, this.height, this.keys)
+        this.reSet(this.chuck)
+    },
+    setTerminator() {
+        this.terminator = new Terminator(this.ctx, this.width, this.height, this.keys)
+        this.reSet(this.terminator)
+    },
+    setRambo() {
+        this.rambo = new Rambo(this.ctx, this.width, this.height, this.keys)
+        this.reSet(this.rambo)
+    },
+
+    reSet(player) {
         LiveBar.init(this.ctx, 200, 45)
         Score.init(this.ctx, 200, 100)
         this.msg = new Message(this.ctx, 400, -50)
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
         this.barrier = new Barrier(this.ctx, this.width * .2, this.height * .85)
-        this.player = new Player(this.ctx, this.width, this.height, this.keys, img);
+        this.player = player
         this.zombieHit1 = arrHit[this.randomHit]
         this.zombieDead1 = arrDead[this.randomHit]
         this.explosion = explosion
@@ -92,16 +105,20 @@ const game = {
         this.unstop = unstop
         this.impre = impre
         this.good = good
-
     },
-    drawAll(frames) {
+    drawAll() {
         this.backgroud.draw()
         this.barrier.draw()
-        this.player.draw(this.framesCounter, frames); //IMPORTANT!! set the timming of the sprite player!!!
+        // this.player.draw(this.framesCounter); //IMPORTANT!! set the timming of the sprite player!!!
+        this.player.draw(this.framesCounter)
         this.enemysArr.forEach((enemy) => enemy.draw(this.framesCounter))
         // This call the function of the Enemy array and set the new animation!!! NO SE TE OLVIDE ESTO!!!!
         this.deadEnemiesArr.forEach((enemy) => enemy.drawDead(enemy, this.framesCounter))
         this.grenadeExplo.forEach((granade) => granade.drawexplode(granade, this.framesCounter))
+    },
+    moveAll() {
+        // this.player.move()
+        this.player.move()
     },
     setDimensions() {
         this.canvas.width = this.width
@@ -177,8 +194,6 @@ const game = {
             this.deadEnemiesArr.splice(this.deadEnemiesArr.indexOf(enemy), 1)
         }, 1800)
         this.soundsCounter()
-
-
     },
     setGranadeExplode(grenade) {
         setTimeout(() => this.player.grenades.splice(this.player.grenades.indexOf(grenade), 1), 1) //splice the enemy with a setTimeout
@@ -188,19 +203,11 @@ const game = {
             this.grenadeExplo.splice(this.grenadeExplo.indexOf(grenade), 1)
         }, 1800)
     },
-
-    moveAll() {
-        this.player.move()
-
-    },
     showMess() {
         this.showMessage = true
         setTimeout(_ => (this.showMessage = false), 2000);
         setTimeout(_ => (this.msg.y = this.msg.y0), 2001)
         setTimeout(_ => (this.msg.font = this.msg.font0), 2001)
-
-
-
     },
     soundsCounter() {
         switch (this.totalDeadths) {
@@ -280,48 +287,3 @@ const game = {
         }
     },
 }
-
-window.onload = function () {
-
-    document.getElementById("game-over").style.display = "none"
-    document.getElementById('myCanvasGame').style.display = 'none'
-    let b = document.getElementById('broforce');
-    gsap.to(b, 1.25, {
-        opacity: 1,
-        scale: 1.2,
-        ease: Linear.easeNone,
-        repeat: 100,
-        yoyo: true
-    })
-
-    rambo()
-    chuck()
-    terminator()
-    document.getElementById("Restart").onclick = function () {
-        window.location.reload()
-        // game.restore()
-        // document.getElementById("game-over").style.display = "none"
-        // document.getElementById("main-menu").style.display = "block"
-        // document.getElementById('startChuck').classList.remove('toUp', 'fuckoff')
-        // document.getElementById('startTerminator').classList.add('toCenterL', 'fuckoff')
-        // document.getElementById('startRambo').classList.add('toCenterR', 'fuckoff')
-        // main.play()
-    }
-    document.getElementById("Restart").onmouseover = function () {
-        gsap.to("#Restart", 0.5, {
-            padding: 25,
-            yoyo: true,
-            repeat: 1,
-            ease: "elastic.out(1, 0.3)"
-        });
-    }
-}
-
-let main = new Howl({
-    src: ['./sounds/unreal-tournament-main-theme.mp3'],
-    autoplay: false,
-    loop: true,
-    volume: 0.6,
-});
-
-   main.play()

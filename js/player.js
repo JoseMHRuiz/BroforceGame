@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, gameW, gameH, keys, imgSource, frame) {
+    constructor(ctx, gameW, gameH, keys) {
         this.ctx = ctx;
 
         this.gameWidth = gameW;
@@ -10,19 +10,19 @@ class Player {
 
         this.posX = 250;
         this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
-   
+
         this.targetX = undefined; //define the target, so we can take the distance position
         this.targetY = undefined;
 
         this.bulletX = undefined; // the postion of the bullet
         this.bulletY = undefined;
 
-        this.image = new Image();
-        this.image.src = imgSource;
-        this.image.frame = frame; // the number of img of the sprite
-        this.image.framesIndex = 0;
-
         this.keys = keys;
+
+        this.image = new Image();
+        this.image.src = undefined;
+        this.image.frame = undefined; // the number of img of the sprite
+        this.image.framesIndex = 0;
 
         this.velY = 1;
         this.velX = 1
@@ -39,19 +39,19 @@ class Player {
     }
 
 
-    draw(framesCounter, frame) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
+    draw(framesCounter) { //this function with the variable inside, set the timming of the sprite IMPORTANT!
         this.ctx.drawImage( // this draw the player
             this.image,
-            this.image.framesIndex * Math.round(this.image.width / frame), // divide the width of the sprite
+            this.image.framesIndex * Math.round(this.image.width / this.image.frame), // divide the width of the sprite
             0,
-            Math.floor(this.image.width / frame),
+            Math.floor(this.image.width / this.image.frame),
             this.image.height,
             this.posX,
             this.posY,
             this.width,
             this.height
         );
-        this.animate(framesCounter, frame);
+        this.animate(framesCounter);
         this.bullets.forEach(bullet => bullet.draw());
         this.clearBullets()
         this.grenades.forEach(grenade => grenade.draw());
@@ -61,11 +61,11 @@ class Player {
         this.bullets.forEach(bullet => bullet.move());
         this.grenades.forEach(grenade => grenade.move());
     }
-    animate(framesCounter, frame) { // this animates the player
+    animate(framesCounter) { // this animates the player
         if (framesCounter % 5 == 0) {
             this.image.framesIndex++;
         }
-        if (this.image.framesIndex > frame - 1) {
+        if (this.image.framesIndex > this.image.frame - 1) {
             this.image.framesIndex = 0;
         }
     }
@@ -83,6 +83,42 @@ class Player {
     }
     clearGrenades() { // this set if the posX < of the target then crear out, always si a little more
         this.grenades = this.grenades.filter(grenade => grenade.posX <= grenade.targetX)
+    }
+
+}
+
+class Rambo extends Player {
+    constructor(ctx, gameW, gameH, keys, ) {
+        super(ctx, gameW, gameH, keys)
+        this.ctx = ctx;
+        this.image = new Image();
+        this.image.src = '../img/RamboHQ.png';
+        this.image.frame = 11; // the number of img of the sprite
+        this.image.framesIndex = 0;
+    }
+
+}
+
+class Chuck extends Player {
+    constructor(ctx, gameW, gameH, keys, ) {
+        super(ctx, gameW, gameH, keys)
+        this.ctx = ctx;
+        this.image = new Image();
+        this.image.src = '../img/Chuck-patada.png';
+        this.image.frame = 8; // the number of img of the sprite
+        this.image.framesIndex = 0;
+    }
+
+}
+
+class Terminator extends Player {
+    constructor(ctx, gameW, gameH, keys, ) {
+        super(ctx, gameW, gameH, keys)
+        this.ctx = ctx;
+        this.image = new Image();
+        this.image.src = '../img/Terminator-smash.png';
+        this.image.frame = 8; // the number of img of the sprite
+        this.image.framesIndex = 0;
     }
 
 }

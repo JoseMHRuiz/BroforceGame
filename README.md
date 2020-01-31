@@ -4,7 +4,7 @@
 
 Hi! This is my first project
 
-Made with HTML5, CSS, VJScript, Canvas, GSAP, Howler.js
+Made with HTML5, CSS, VJScript, Canvas, GSAP, Howler.js, GarageBand, Photoshop
 
 # Controls
 
