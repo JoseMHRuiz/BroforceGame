@@ -8,7 +8,7 @@ class Player {
         this.width = 100;
         this.height = 140;
 
-        this.posX = 190;
+        this.posX = 250;
         this.posY = this.gameHeight / 2; // this puts the player in the middle of the playground
    
         this.targetX = undefined; //define the target, so we can take the distance position

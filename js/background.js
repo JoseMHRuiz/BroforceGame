@@ -20,10 +20,10 @@ class Backgroud {
 }
 
 class Barrier {
-    constructor(ctx) {
+    constructor(ctx, w, h) {
         this.ctx = ctx;
-        this.width = 300;
-        this.height = 750;
+        this.width = w;
+        this.height = h;
 
         this.image = new Image();
         this.image.src = './img/Barrier.png';

@@ -32,10 +32,25 @@ const Score = {
         this.ctx.font = '30px ThaleahFat'
         this.ctx.fillText(`⚰️Kill's ${score}`, this.x, this.y);
     },
-    mensage(score) {
-        this.ctx.fillStyle = "white";
-        this.ctx.font = '30px ThaleahFat'
-        this.ctx.fillText(`⚰️Kill's`, this.x + 30, this.y + 30);
-    }
 }
 
+class Message {
+    constructor(ctx, x, y) {
+            this.ctx = ctx;
+            this.x = x
+            this.y = y
+            this.font = 100
+            this.font0 = 100
+            this.y0 = y
+            this.y1 = y + 200
+        }
+        draw(msg) {
+            this.y += 2
+            this.w += 2
+            this.h += 2
+            this.font++
+            this.ctx.fillStyle = "white";
+            this.ctx.font = `${this.font}px ThaleahFat`
+            this.ctx.fillText(`${msg}`, this.x, this.y);
+        }
+}

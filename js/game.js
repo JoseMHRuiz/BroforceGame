@@ -12,14 +12,12 @@ const shuffle = array => array.sort(() => Math.random() - 0.5);
 const game = {
     canvas: undefined,
     ctx: undefined,
-    width: 1600,
-    height: 900,
+    width: window.innerWidth,
+    height: window.innerHeight,
     FPS: 60,
     randomHit: randomIntHit(0, 1),
     framesCounter: 0,
     mousePos: undefined,
-    message: undefined,
-    score: 0,
     enemysArr: [],
     rect: undefined,
     deadEnemiesArr: [],
@@ -35,7 +33,8 @@ const game = {
         SPACE: 32,
         C: 67,
     },
-    showMens: false,
+    showMessage: false,
+    message: undefined,
     init(img, frames) {
         this.canvas = document.getElementById('myCanvasGame')
         this.ctx = this.canvas.getContext('2d')
@@ -68,9 +67,9 @@ const game = {
             this.zombieVsBarrier()
             this.level()
             this.gameOver()
+            if (this.showMessage) this.msg.draw(this.message)
             LiveBar.draw(this.live)
             Score.draw(this.totalDeadths)
-            if(this.showMens) Score.mensage
         }, 1000 / this.FPS);
     },
     clear() {
@@ -79,8 +78,9 @@ const game = {
     reSet(img) {
         LiveBar.init(this.ctx, 200, 45)
         Score.init(this.ctx, 200, 100)
+        this.msg = new Message(this.ctx, 400, -50)
         this.backgroud = new Backgroud(this.ctx, this.width, this.height, './img/ground.png');
-        this.barrier = new Barrier(this.ctx)
+        this.barrier = new Barrier(this.ctx, this.width * .2, this.height * .85)
         this.player = new Player(this.ctx, this.width, this.height, this.keys, img);
         this.zombieHit1 = arrHit[this.randomHit]
         this.zombieDead1 = arrDead[this.randomHit]
@@ -92,6 +92,7 @@ const game = {
         this.unstop = unstop
         this.impre = impre
         this.good = good
+
     },
     drawAll(frames) {
         this.backgroud.draw()
@@ -192,28 +193,51 @@ const game = {
         this.player.move()
 
     },
+    showMess() {
+        this.showMessage = true
+        setTimeout(_ => (this.showMessage = false), 2000);
+        setTimeout(_ => (this.msg.y = this.msg.y0), 2001)
+        setTimeout(_ => (this.msg.font = this.msg.font0), 2001)
+
+
+
+    },
     soundsCounter() {
         switch (this.totalDeadths) {
             case 5:
                 this.unreal.play();
+                this.message = 'Unreal'
+                this.showMess()
                 break;
             case 10:
                 this.erradi.play()
+                this.message = 'Erradication'
+                this.showMess()
                 break;
             case 15:
                 this.blood.play()
+                this.message = 'Blood Bath'
+                this.showMess()
                 break;
             case 20:
                 this.killing.play()
+                this.message = 'Killing Machine'
+                this.showMess()
                 break;
             case 25:
                 this.unstop.play()
+                this.message = 'Unstoppable'
+                this.showMess()
                 break;
             case 30:
                 this.impre.play()
+                this.message = 'Impresive'
+                this.showMess()
                 break;
             case 35:
                 this.good.play()
+                this.message = 'GOOD LIKE'
+                this.showMess()
                 break;
         }
 
@@ -263,14 +287,18 @@ window.onload = function () {
     document.getElementById('myCanvasGame').style.display = 'none'
     let b = document.getElementById('broforce');
     gsap.to(b, 1.25, {
-        opacity: 1, scale: 1.2, ease: Linear.easeNone, repeat: 100, yoyo: true
+        opacity: 1,
+        scale: 1.2,
+        ease: Linear.easeNone,
+        repeat: 100,
+        yoyo: true
     })
 
     rambo()
     chuck()
     terminator()
     document.getElementById("Restart").onclick = function () {
-        
+        window.location.reload()
         // game.restore()
         // document.getElementById("game-over").style.display = "none"
         // document.getElementById("main-menu").style.display = "block"
@@ -289,11 +317,11 @@ window.onload = function () {
     }
 }
 
-   let main = new Howl({
-       src: ['./sounds/unreal-tournament-main-theme.mp3'],
-       autoplay: false,
-       loop: true,
-       volume: 0.6,
-   });
+let main = new Howl({
+    src: ['./sounds/unreal-tournament-main-theme.mp3'],
+    autoplay: false,
+    loop: true,
+    volume: 0.6,
+});
 
 //    main.play()

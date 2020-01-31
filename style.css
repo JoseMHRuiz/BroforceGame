@@ -1,6 +1,25 @@
 * {
     margin: 0
 }
+@font-face {
+    font-family: "ThaleahFat";
+    src: url("./fonts/ThaleahFat.eot");
+    /* IE9 Compat Modes */
+    src: url("./fonts/ThaleahFat.eot?#iefix") format("embedded-opentype"),
+        /* IE6-IE8 */
+        url("./fonts/ThaleahFat.otf") format("opentype"),
+        /* Open Type Font */
+        url("./fonts/ThaleahFat.svg") format("svg"),
+        /* Legacy iOS */
+        url("./fonts/ThaleahFat.ttf") format("truetype"),
+        /* Safari, Android, iOS */
+        url("./fonts/ThaleahFat.woff") format("woff"),
+        /* Modern Browsers */
+        url("./fonts/ThaleahFat.woff2") format("woff2");
+    /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+}
 
 @keyframes breath {
     0% {
@@ -105,12 +124,12 @@ div p {
 }
 
 .toCenterR {
-    transform: translateX(-250px) rotate(-360deg);
+    transform: translateX(-210px) rotate(-360deg);
     transition: 1000ms;
 }
 
 .toCenterL {
-    transform: translateX(+250px) rotate(360deg);
+    transform: translateX(+210px) rotate(360deg);
     transition: 1000ms;
 }
 
