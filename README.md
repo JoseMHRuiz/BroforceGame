@@ -4,7 +4,7 @@
 
 Hi! This is my first project
 
-Made with Canvas
+Made with HTML5, CSS, VJScript, Canvas, GSAP, Howler.js
 
 # Controls
 
