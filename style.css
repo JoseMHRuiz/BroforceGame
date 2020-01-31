@@ -2,11 +2,31 @@
     margin: 0
 }
 
+@keyframes breath {
+    0% {
+        opacity: 0;
+        transform: scale3d(1, 1, 1);
+    }
+
+    25% {
+        opacity: 1;
+        transform: scale3d(1.5, 1.5, 1);
+    }
+
+    50% {
+        opacity: 0;
+        transform: scale3d(1, 1, 1);
+    }
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     letter-spacing: 5px;
     text-transform: uppercase;
 
+}
+#broforce {
+    width: 700px;
 }
 
 canvas {
@@ -15,14 +35,20 @@ canvas {
 }
 
 #main-menu {
+    display: flex;
+    flex-direction: column;
+    
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
     height: 100vh;
     text-align: center;
-    background: white url(./img/BackgroundStar.png) no-repeat center / cover;
+    background: white url(./img/Start.jpg) no-repeat center / cover;
     z-index: 0
 }
 
 #main-menu img {
-    width: 600px;
+    /* width: 600px; */
     display: block;
     /* margin-bottom: 0; */
 }
@@ -64,14 +90,36 @@ div p {
     letter-spacing: 5px;
     font-weight: 500;
     cursor: pointer;
-    margin-top: 200px;
-    margin-right: 50px;
+    /* margin-top: 200px; */
+    /* margin-right: 50px; */
 }
 
-.btn:hover {
+/* .btn:hover {
     background-color: grey;
+} */
+
+.fuckoff {
+    transform: translateY(-600px);
+    transition: 1000ms;
+
 }
 
+.toCenterR {
+    transform: translateX(-250px) rotate(-360deg);
+    transition: 1000ms;
+}
+
+.toCenterL {
+    transform: translateX(+250px) rotate(360deg);
+    transition: 1000ms;
+}
+
+
+.toUp {
+    transform: translateY(10px) rotateX(360deg);
+    transition: 1000ms;
+
+}
 
 /* Alingner */
 
@@ -81,7 +129,7 @@ div p {
 #game-over {
     height: 100vh;
     text-align: center;
-    background: white url(./img/GameBackground.png) no-repeat center / cover;
+    background: white url(./img/GameOver.png) no-repeat center / cover;
     z-index: 0
 }
 
@@ -91,6 +139,10 @@ div p {
     padding-top: 200px;
     display: block;
     /* margin-bottom: 0; */
+}
+
+#Restart {
+    margin-top: 610px;
 }
 
 .Aligner {
