@@ -34,4 +34,4 @@ let main = new Howl({
     volume: 0.6,
 });
 
-//    main.play()
+   main.play()
