@@ -134,7 +134,7 @@ div p {
 #game-over {
   height: 100vh;
   text-align: center;
-  background: white url(image/GameOver.png) no-repeat center / cover;
+  background: white url(image/gameover.png) no-repeat center / cover;
   z-index: 0;
 }
 
