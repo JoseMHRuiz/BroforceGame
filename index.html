@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ZombieGame</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
-    <script src="./js/sounds.js"></script>
-    <script src="./js/grenades.js"></script>
-    <script src="./js/hud.js"></script>
-    <script src="./js/bullets.js"></script>
-    <script src="./js/background.js"></script>
-    <script src="./js/defense.js"></script>
-    <script src="./js/player.js"></script>
-    <script src="./js/enemies.js"></script>
-    <script src="./js/characterSelector.js"></script>
-    <script src="./js/game.js"></script>
-    <script src="./js/index.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <script src="js/sounds.js"></script>
+    <script src="js/grenades.js"></script>
+    <script src="js/hud.js"></script>
+    <script src="js/bullets.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/defense.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/characterSelector.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="main-menu" class="Aligner">
-        <div class="Aligner-item">
-            <a id="startRambo" class="btn noselect"><span>Rambo</span></a>
-            <a id="startChuck" class="btn noselect"><span>Chuck</span></a>
-            <a id="startTerminator" class="btn noselect"><span>Terminator</span></a>
-        </div>
-        <img id='broforce' src="./img/BroforceHD.png" alt="">
+      <div class="Aligner-item">
+        <a id="startRambo" class="btn noselect"><span>Rambo</span></a>
+        <a id="startChuck" class="btn noselect"><span>Chuck</span></a>
+        <a id="startTerminator" class="btn noselect"><span>Terminator</span></a>
+      </div>
+      <img id="broforce" src="./img/BroforceHD.png" alt="" />
     </div>
     <div id="game-over" class="Aligner">
-        <div class="Aligner-item">
-            <a id="Restart" class="btn"><span>Restart</span></a>
-        </div>
+      <div class="Aligner-item">
+        <a id="Restart" class="btn"><span>Restart</span></a>
+      </div>
     </div>
-    <canvas id='myCanvasGame'></canvas>
-</body>
+    <canvas id="myCanvasGame"></canvas>
+  </body>
 </html>
