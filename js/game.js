@@ -285,7 +285,7 @@ const game = {
   generateEnemies() {
     if (this.counterEnemies % this.numberOfEnemies === 0)
       this.enemysArr.push(
-        new Enemy(this.ctx, this.width, this.height, "./img/ZombieMoving.png")
+        new Enemy(this.ctx, this.width, this.height, "./img/zombiemoving.png")
       );
   },
   level() {
