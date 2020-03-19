@@ -29,7 +29,7 @@ class Barrier {
     this.height = h;
 
     this.image = new Image();
-    this.image.src = "./img/barrier.png";
+    this.image.src = "image/barrier.png";
     this.live = 1000;
     this.posX = 0;
     this.posY = 100;

@@ -21,7 +21,7 @@ class Bullets {
     this.vecX = undefined; // defines the vector X & Y
     this.vecY = undefined;
     this.image = new Image();
-    this.image.src = "./img/bullet.png";
+    this.image.src = "image/bullet.png";
   }
 
   draw() {

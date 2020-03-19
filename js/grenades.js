@@ -22,12 +22,12 @@ class Grenades {
     this.vecY = undefined;
 
     this.image = new Image();
-    this.image.src = "./img/grenade.png";
+    this.image.src = "image/grenade.png";
     this.image.frames = 12; // the number of img of the sprite
     this.image.framesIndex = 0;
 
     this.imageExp = new Image();
-    this.imageExp.src = "./img/explosion.png";
+    this.imageExp.src = "image/explosion.png";
     this.imageExp.frames = 12; // the number of img of the sprite
     this.imageExp.framesIndex = 0;
 

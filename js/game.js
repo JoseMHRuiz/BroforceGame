@@ -103,7 +103,7 @@ const game = {
       this.ctx,
       this.width,
       this.height,
-      "./img/ground.png"
+      "image/ground.png"
     );
     this.barrier = new Barrier(this.ctx, this.width * 0.2, this.height * 0.85);
     this.player = player;
@@ -285,7 +285,7 @@ const game = {
   generateEnemies() {
     if (this.counterEnemies % this.numberOfEnemies === 0)
       this.enemysArr.push(
-        new Enemy(this.ctx, this.width, this.height, "./img/zombiemoving.png")
+        new Enemy(this.ctx, this.width, this.height, "image/zombiemoving.png")
       );
   },
   level() {

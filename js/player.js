@@ -116,7 +116,7 @@ class Rambo extends Player {
     super(ctx, gameW, gameH, keys);
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = "../img/rambohq.png";
+    this.image.src = "image/rambohq.png";
     this.image.frame = 11; // the number of img of the sprite
     this.image.framesIndex = 0;
   }
@@ -127,7 +127,7 @@ class Chuck extends Player {
     super(ctx, gameW, gameH, keys);
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = "../img/chuckpatada.png";
+    this.image.src = "image/chuckpatada.png";
     this.image.frame = 8; // the number of img of the sprite
     this.image.framesIndex = 0;
   }
@@ -138,7 +138,7 @@ class Terminator extends Player {
     super(ctx, gameW, gameH, keys);
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = "../img/terminatorsmash.png";
+    this.image.src = "image/terminatorsmash.png";
     this.image.frame = 8; // the number of img of the sprite
     this.image.framesIndex = 0;
   }

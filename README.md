@@ -1,4 +1,4 @@
-![Broforce](https://github.com/JoseMHRuiz/BroforceGame/blob/master/img/BroforceHD.png?raw=true)
+![Broforce](https://github.com/JoseMHRuiz/BroforceGame/blob/master/image/BroforceHD.png?raw=true)
 
 # 🎯BroforceGame!!
 
@@ -15,4 +15,4 @@ Have fun!😊
 
 https://josemhruiz.github.io/BroforceGame/
 
-![Enter GIF](https://github.com/JoseMHRuiz/BroforceGame/blob/master/img/2020-01-31%2012.55.26.gif?raw=true)
+![Enter GIF](https://github.com/JoseMHRuiz/BroforceGame/blob/master/image/2020-01-31%2012.55.26.gif?raw=true)

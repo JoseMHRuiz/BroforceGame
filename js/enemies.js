@@ -74,7 +74,7 @@ class Enemy {
     );
     this.animateDead(framesCounter);
     enemy.image.frames = 6;
-    enemy.image.src = "./img/zombie2deifinitive.png";
+    enemy.image.src = "image/zombie2deifinitive.png";
     enemy.speed = 0;
     enemy.width = 110;
     enemy.height = 130;
