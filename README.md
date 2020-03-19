@@ -1,4 +1,4 @@
-![Broforce](https://github.com/JoseMHRuiz/BroforceGame/blob/master/image/BroforceHD.png?raw=true)
+![Broforce](https://github.com/JoseMHRuiz/BroforceGame/blob/master/image/broforcehq.png?raw=true)
 
 # 🎯BroforceGame!!
 
