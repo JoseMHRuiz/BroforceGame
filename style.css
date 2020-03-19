@@ -43,7 +43,7 @@ body {
 }
 
 canvas {
-  cursor: url(image/Bullet.png), default;
+  cursor: url(image/bullet.png), default;
   position: absolute;
 }
 
@@ -56,7 +56,7 @@ canvas {
   align-items: center;
   height: 100vh;
   text-align: center;
-  background: white url(image/Start.jpg) no-repeat center / cover;
+  background: white url(image/start.jpg) no-repeat center / cover;
   z-index: 0;
 }
 
